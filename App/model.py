@@ -180,6 +180,7 @@ def selectSortAlgorithm(algo_opt):
     # TODO completar el ordenamiento personalizado para el lab 5
     # TODO nuevo del lab 5
     # respuestas por defecto
+    
     sort_algorithm = None
     algo_msg = None
 

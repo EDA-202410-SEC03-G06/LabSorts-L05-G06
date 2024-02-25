@@ -169,6 +169,7 @@ def sort(lst, sort_crit):
     # TODO cree todas las funciones y variables auxiliares que necesite
 
     # retorna la lista ordenada
+     
     return lst
 
 
