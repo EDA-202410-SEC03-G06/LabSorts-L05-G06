@@ -153,7 +153,7 @@ El algoritmo de ordenamiento que se implementa en este módulo puede ser:
 """
 
 
-def sort(lst, sort_crit):
+def sort(lst,sort_crit):
     """sort ordena una lista de elementos utilizando el algoritmo
     implementado por el usuario. puede ser Tim Sort o Patient Sort.
 
@@ -169,7 +169,18 @@ def sort(lst, sort_crit):
     # TODO cree todas las funciones y variables auxiliares que necesite
 
     # retorna la lista ordenada
-     
+    size = lt.size(lst)
+    min_run = setMinRun(size)
+    for i  in  range(0,size,min_run):
+        insertion(lst, sort_crit, i, min(i+min_run-1, size-1))
+    current_size = min_run
+    while current_size < size:
+        for left in range(0,size,2*current_size):
+                mid = min(left + current_size - 1, size-1)
+                right = min(left + 2*current_size - 1, size-1)
+                merge(lst, sort_crit, left, mid, right)
+                
+        current_size = current_size * 2
     return lst
 
 
@@ -199,7 +210,7 @@ def setMinRun(n):
     return min_run
 
 
-def insertion(lst, sort_crit, left_idx, right_idx):
+def insertion(lst,sort_crit, left_idx, right_idx):
     """insertion ordena una lista de elementos utilizando con una variante
     del algoritmo de inserción entre los indices izquierdo (left_idx) y
     derecho (right_idx) con un recorrido de a lo sumo min_run.
@@ -214,9 +225,14 @@ def insertion(lst, sort_crit, left_idx, right_idx):
     Returns:
         list: La lista ordenada.
     """
+    for i in range(left_idx+1, right_idx):
+        j = i
+        while j > left_idx and lst[j] < lst[j-1]:
+        
+            lt.exchange(lst, lst[j], lst[j-1])
+            j = j-1
+    return lst
     # TODO implementar la parte del insertion para el timsort en el lab 5
-    pass
-
 
 def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
     """merge fusiona los recorridos previamente ordenados con el insertion.
@@ -233,7 +249,39 @@ def merge(lst, sort_crit, left_idx, mid_idx, right_idx):
         list: La lista ordenada.
     """
     # TODO implementar la parte del merge para el timsort en el lab 5
-    pass
+    len1 = mid_idx - left_idx + 1
+    len2 = right_idx - mid_idx
+    l = lt.newList('ARRAY_LIST')
+    r = lt.newList('ARRAY_LIST')
+    
+    for i in range(0,len1):
+        l[i] = lst[l + i]
+    
+    for i in range(0,len2):
+        r[i] = lst[mid_idx + 1 + i]
+    
+    i = 0
+    j = 0
+    k = l
+    while i < len1 and j < len2:
+        if l[i] <= r[j]:
+            lst[k] = l[i]
+            i = i + 1
+        else:
+            lst[k] = r[j]
+            j = j + 1
+      
+        k = k + 1
+    while i < len1:
+        lst[k] = l[i]
+        i = i + 1
+        k = k + 1
+    while j < len2:
+        lst[k] = r[j]
+        j = j + 1
+        k = k + 1
+   
+    return lst
 
 # ===========================================
 # Funciones auxiliares para Patience Sort
