@@ -139,7 +139,7 @@ El algoritmo de ordenamiento que se implementa en este módulo puede ser:
                 if left == piles
                     piles = piles + 1
                 end if
-                top[left] = arr[i]
+                top[left] = arr[i]  
             end for
             return piles
         End Function
